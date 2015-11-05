@@ -5,14 +5,12 @@
  */
 package com.fpmislata.banco.persistence.dao;
 
-import java.sql.Connection;
+import com.fpmislata.banco.business.domain.Provincia;
 
 /**
  *
  * @author alumno
  */
-public interface ConnectionFactory {
-   public Connection getConnection();
-   public void close(Connection connection);
-   
+public interface ProvinciaDAO extends GenericDAO<Provincia> {
+    
 }
