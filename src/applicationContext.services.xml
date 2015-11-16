@@ -13,5 +13,6 @@
     <bean class="com.fpmislata.banco.persistence.jdbc.ConnectionFactoryImplDataSource"/>
     <bean class="com.fpmislata.banco.persistence.jdbc.DataSourceFactoryImpl"/>
     <bean class="com.fpmislata.banco.business.service.impl.EntidadBancariaServiceImpl"/>
- 
+    <bean class="com.fpmislata.banco.security.PasswordManagerImplJasypt"/>
+    <bean class="com.fpmislata.banco.security.AuthorizationImplDummy"/>
 </beans>

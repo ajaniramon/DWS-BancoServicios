@@ -12,9 +12,8 @@ public class PasswordManagerImplJasypt implements PasswordManager {
     }
 
     @Override
-    public boolean check(String password) {
+    public boolean check(String password, String encryptedPassword) {
         StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
-        String encryptedPassword = this.encrypt(password);
         boolean success = strongPasswordEncryptor.checkPassword(password, encryptedPassword);
         return success;
     }
