@@ -17,7 +17,7 @@ public class ProvinciaDAOImplJDBC implements ProvinciaDAO {
     }
 
     @Override
-    public void insert(Provincia t) {
+    public Provincia insert(Provincia t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

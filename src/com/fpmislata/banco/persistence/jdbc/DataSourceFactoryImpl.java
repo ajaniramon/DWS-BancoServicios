@@ -16,7 +16,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
         try {
             InitialContext initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            dataSource = (DataSource) envCtx.lookup("jdbc/banco");
+            dataSource = (DataSource) envCtx.lookup("jdbc/MySQLDS");
         } catch (NamingException ex) {
             dataSource = null;
             throw new RuntimeException("Error al inicializar objeto InitialContext. " + ex.getMessage());

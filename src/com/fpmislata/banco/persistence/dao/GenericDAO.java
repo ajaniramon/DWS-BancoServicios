@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface GenericDAO<T> {
     T get(int id);
-    void insert(T t);
+    T insert(T t);
     T update(T t);
     boolean delete(int id);
     List<T> findAll();

@@ -3,18 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fpmislata.banco.business.service;
+package com.fpmislata.banco.persistence.dao;
 
-import java.util.List;
+import com.fpmislata.banco.business.domain.Usuario;
 
 /**
  *
  * @author alumno
  */
-public interface GenericService<T> {
-    T get(int id);
-    T insert(T t);
-    T update(T t);
-    boolean delete(int id);
-    List<T> findAll();
+public interface UsuarioDAO extends GenericDAO<Usuario>{
+    
 }

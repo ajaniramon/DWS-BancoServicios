@@ -19,8 +19,8 @@ public abstract class GenericServiceImpl<T> implements GenericService<T> {
     }
 
     @Override
-    public void insert(T t) {
-        genericDAO.insert(t);
+    public T insert(T t) {
+       return genericDAO.insert(t);
     }
 
     @Override

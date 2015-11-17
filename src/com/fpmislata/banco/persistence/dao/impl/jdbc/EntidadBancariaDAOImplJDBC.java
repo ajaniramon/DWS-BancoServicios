@@ -63,7 +63,7 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
     }
 
     @Override
-    public void insert(EntidadBancaria entidadBancaria) {
+    public EntidadBancaria insert(EntidadBancaria entidadBancaria) {
         Connection connection = connectionFactory.getConnection();
         try {
             String sql = "INSERT INTO entidadBancaria VALUES (null,?,?,?,?,?);";
@@ -75,6 +75,16 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
             preparedStatement.setString(4, entidadBancaria.getDireccion());
             preparedStatement.setString(5, entidadBancaria.getCif());
             preparedStatement.executeUpdate();
+            try(ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if(resultSet.next()){
+                    int returnedGeneratedKey = resultSet.getInt(1);
+                    entidadBancaria.setIdEntidadBancaria(returnedGeneratedKey);
+                }else{
+                 throw new RuntimeException("No se ha devuelto CP.");   
+                }
+            } catch (SQLException ex) {
+                 throw new RuntimeException("Error SQL: " + ex.getMessage() + " ERROR CODE: " + ex.getSQLState());
+            }
         } catch (SQLException ex) {
             throw new RuntimeException("Error SQL: " + ex.getMessage() + " ERROR CODE: " + ex.getSQLState());
         } finally {
@@ -86,7 +96,7 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
                 throw new RuntimeException("Error al cerrar la conexión. " + ex.getMessage());
             }
         }
-
+        return entidadBancaria;
     }
 
     @Override

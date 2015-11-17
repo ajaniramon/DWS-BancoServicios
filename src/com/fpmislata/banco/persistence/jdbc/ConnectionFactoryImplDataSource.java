@@ -28,7 +28,7 @@ public class ConnectionFactoryImplDataSource implements ConnectionFactory{
             Connection connection = null;
             InitialContext initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            dataSource = (DataSource) envCtx.lookup("jdbc/banco");
+            dataSource = (DataSource) envCtx.lookup("jdbc/MySQLDS");
             connection = dataSource.getConnection();
             
             return connection;

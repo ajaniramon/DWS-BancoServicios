@@ -2,6 +2,7 @@ package com.fpmislata.banco.business.domain;
 
 
 public class Usuario {
+int idUsuario;
 String username;
 String password;
 private Rol rol;
@@ -14,9 +15,32 @@ private Rol rol;
         this.password = password;
     }
 
+    public Usuario(int idUsuario, String username, String password, Rol rol) {
+        this.idUsuario = idUsuario;
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+    }
+
     public Usuario(String username, String password, Rol rol) {
         this.username = username;
         this.password = password;
+        this.rol = rol;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
