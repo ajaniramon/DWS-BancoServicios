@@ -1,6 +1,7 @@
 package com.fpmislata.banco.business.service.impl;
 
 import com.fpmislata.banco.business.service.GenericService;
+import com.fpmislata.banco.persistence.core.BusinessException;
 import com.fpmislata.banco.persistence.dao.GenericDAO;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public abstract class GenericServiceImpl<T> implements GenericService<T> {
     }
 
     @Override
-    public T insert(T t) {
+    public T insert(T t) throws BusinessException {
        return genericDAO.insert(t);
     }
 
