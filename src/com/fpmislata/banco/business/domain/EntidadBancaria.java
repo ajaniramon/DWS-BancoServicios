@@ -5,13 +5,14 @@
  */
 package com.fpmislata.banco.business.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author alumno
  */
-public class EntidadBancaria {
+public class EntidadBancaria implements Serializable {
 
     int idEntidadBancaria;
     String nombre;

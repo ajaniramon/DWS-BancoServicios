@@ -10,7 +10,7 @@
     <context:annotation-config/>
   
     <bean class="com.fpmislata.banco.persistence.dao.impl.jdbc.EntidadBancariaDAOImplJDBC"/>
-    <bean class="com.fpmislata.banco.persistence.dao.impl.jdbc.UsuarioDAOImplJDBC"/>
+    <bean class="com.fpmislata.banco.persistence.dao.impl.hibernate.EntidadBancariaDAOImplHibernate"/>
     <bean class="com.fpmislata.banco.persistence.jdbc.ConnectionFactoryImplDataSource"/>
     <bean class="com.fpmislata.banco.persistence.jdbc.DataSourceFactoryImpl"/>
     <bean class="com.fpmislata.banco.business.service.impl.EntidadBancariaServiceImpl"/>

@@ -7,6 +7,8 @@ package com.fpmislata.banco.persistence.dao.impl.jdbc;
 
 import com.fpmislata.banco.persistence.jdbc.ConnectionFactory;
 import com.fpmislata.banco.business.domain.EntidadBancaria;
+import com.fpmislata.banco.persistence.core.BusinessException;
+import com.fpmislata.banco.persistence.core.BusinessMessage;
 import com.fpmislata.banco.persistence.dao.EntidadBancariaDAO;
 import com.fpmislata.banco.util.DateConverter;
 import java.sql.Connection;
@@ -16,9 +18,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -26,10 +25,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author alumno
  */
 public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
+
     @Autowired
     ConnectionFactory connectionFactory;
 
- 
     @Override
     public EntidadBancaria get(int idEntidadBancaria) {
         Connection connection = connectionFactory.getConnection();
@@ -63,7 +62,7 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
     }
 
     @Override
-    public EntidadBancaria insert(EntidadBancaria entidadBancaria) {
+    public EntidadBancaria insert(EntidadBancaria entidadBancaria) throws BusinessException {
         Connection connection = connectionFactory.getConnection();
         try {
             String sql = "INSERT INTO entidadBancaria VALUES (null,?,?,?,?,?);";
@@ -75,25 +74,30 @@ public class EntidadBancariaDAOImplJDBC implements EntidadBancariaDAO {
             preparedStatement.setString(4, entidadBancaria.getDireccion());
             preparedStatement.setString(5, entidadBancaria.getCif());
             preparedStatement.executeUpdate();
-            try(ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                if(resultSet.next()){
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
                     int returnedGeneratedKey = resultSet.getInt(1);
                     entidadBancaria.setIdEntidadBancaria(returnedGeneratedKey);
-                }else{
-                 throw new RuntimeException("No se ha devuelto CP.");   
+                } else {
+                    throw new RuntimeException("No se ha devuelto CP.");
                 }
             } catch (SQLException ex) {
-                 throw new RuntimeException("Error SQL: " + ex.getMessage() + " ERROR CODE: " + ex.getSQLState());
+                throw new RuntimeException("Error SQL: " + ex.getMessage() + " ERROR CODE: " + ex.getSQLState());
             }
         } catch (SQLException ex) {
-            throw new RuntimeException("Error SQL: " + ex.getMessage() + " ERROR CODE: " + ex.getSQLState());
+            if(ex.getErrorCode() == 1062 && ex.getSQLState().equals("23000")){
+                System.out.println(ex.getMessage());
+                throw new BusinessException(new BusinessMessage("ColumnaDuplicada","Hay una columna duplicada."));
+            }else{
+                throw new RuntimeException(ex);
+            }
         } finally {
             try {
                 if (connection != null) {
                     connection.close();
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException("Error al cerrar la conexión. " + ex.getMessage());
+               throw new RuntimeException(ex);
             }
         }
         return entidadBancaria;

@@ -12,6 +12,7 @@ import com.fpmislata.banco.persistence.core.BusinessMessage;
 import com.fpmislata.banco.persistence.dao.EntidadBancariaDAO;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -19,6 +20,7 @@ import java.util.List;
  */
 public class EntidadBancariaServiceImpl extends GenericServiceImpl<EntidadBancaria> implements EntidadBancariaService {
 
+    @Autowired
     EntidadBancariaDAO entidadBancariaDAO = (EntidadBancariaDAO) genericDAO;
 
     @Override
@@ -29,24 +31,26 @@ public class EntidadBancariaServiceImpl extends GenericServiceImpl<EntidadBancar
 
     @Override
     public EntidadBancaria insert(EntidadBancaria entidadBancaria) throws BusinessException {
+
         List<BusinessMessage> businessMessages = new ArrayList();
-        
-        if(entidadBancaria.getNombre() == null){
-            businessMessages.add(new BusinessMessage("nombre","El nombre no puede estar vacío."));
+
+        if (entidadBancaria.getNombre() == null) {
+            businessMessages.add(new BusinessMessage("nombre", "El nombre no puede estar vacío."));
         }
-        if(entidadBancaria.getCif() == null){
-            businessMessages.add(new BusinessMessage("cif","El CIF no puede estar vacío"));
+        if (entidadBancaria.getCif() == null) {
+            businessMessages.add(new BusinessMessage("cif", "El CIF no puede estar vacío"));
         }
-        if(entidadBancaria.getFechaCreacion() == null){
-            businessMessages.add(new BusinessMessage("fecha","La fecha no puede estar vacía."));
+        if (entidadBancaria.getFechaCreacion() == null) {
+            businessMessages.add(new BusinessMessage("fecha", "La fecha no puede estar vacía."));
         }
-        if(String.valueOf(entidadBancaria.getCodigoEntidad()).length() != 4){
-            businessMessages.add(new BusinessMessage("codigoEntidad","El código entidad debe tener 4 digitos."));
+        if (String.valueOf(entidadBancaria.getCodigoEntidad()).length() != 4) {
+            businessMessages.add(new BusinessMessage("codigoEntidad", "El código entidad debe tener 4 digitos."));
         }
-        if(!businessMessages.isEmpty()){
+        if (!businessMessages.isEmpty()) {
             throw new BusinessException(businessMessages);
         }
         return entidadBancariaDAO.insert(entidadBancaria);
+
     }
 
 }
